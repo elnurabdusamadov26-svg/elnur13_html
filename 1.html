@@ -1,0 +1,1075 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zamonaviy Uy - 203 m²</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #00d4ff;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        .stat-label {
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(180deg, #00d4ff, #7b2cbf);
+            border-radius: 2px;
+        }
+
+        .exterior-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .image-container {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+        }
+
+        .measurements {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .measure-item {
+            background: rgba(0,212,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid #00d4ff;
+        }
+
+        .measure-label {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .measure-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .room-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .room-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .room-info {
+            padding: 20px;
+        }
+
+        .room-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .room-dimensions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .dimension {
+            flex: 1;
+        }
+
+        .dimension-label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .dimension-value {
+            font-size: 1rem;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .room-area {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0,212,255,0.1);
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .floor-plan-container {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .floor-plan-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .exterior-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zamonaviy Uy </h1>
+            <p class="subtitle">3 Xona | 2.5 Hovli | 203 m²</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🛏️</div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Yotoqxona</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🚿</div>
+                <div class="stat-value">2.5</div>
+                <div class="stat-label">Hovli</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📐</div>
+                <div class="stat-value">203</div>
+                <div class="stat-label">m² Jami maydon</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏗️</div>
+                <div class="stat-value">1</div>
+                <div class="stat-label">Qavat</div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">Tashqi Ko'rinish (Exterior)</h2>
+            <div class="exterior-grid">
+                <div class="image-container">
+                    <img src="https://media.istockphoto.com/id/2175973649/photo/modern-luxury-house-exterior.jpg?s=612x612&w=0&k=20&c=ukvco7tJDNWJgyXzRtaCVTc6SRWNlXEuDJEW10a3s0g=" alt="Uy tashqi ko'rinishi">
+                    <div class="image-overlay">
+<p>Tashqi ko'rinish - Old tomon</p>
+                    </div>
+                </div>
+                <div class="measurements">
+                    <div class="measure-item">
+                        <div class="measure-label">Umumiy kenglik</div>
+                        <div class="measure-value">18.5 m</div>
+                    </div>
+                    <div class="measure-item">
+                        <div class="measure-label">Umumiy chuqurlik</div>
+                        <div class="measure-value">22.0 m</div>
+                    </div>
+                    <div class="measure-item">
+                        <div class="measure-label">Devor balandligi</div>
+                        <div class="measure-value">3.2 m</div>
+                    </div>
+                    <div class="measure-item">
+                        <div class="measure-label">Tom balandligi</div>
+                        <div class="measure-value">5.5 m</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Ichki Ko'rinish (Interior)</h2>
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <img class="room-image" src="https://brabbu.com/blog/wp-content/uploads/2023/09/ehuq-chO-1.png" alt="Yotoqxona">
+                    <div class="room-info">
+                        <h3 class="room-name">Yotoqxona 1 (Master)</h3>
+                        <div class="room-dimensions">
+                            <div class="dimension">
+                                <div class="dimension-label">Kenglik</div>
+                                <div class="dimension-value">4.5 m</div>
+                            </div>
+                            <div class="dimension">
+                                <div class="dimension-label">Chuqurlik</div>
+                                <div class="dimension-value">5.0 m</div>
+                            </div>
+                        </div>
+                        <div class="room-area">Maydon: 22.5 m²</div>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <img class="room-image" src="https://www.decorilla.com/online-decorating/wp-content/uploads/2023/07/Modern-luxury-living-room-design-by-Decorilla.jpg" alt="Yotoqxona 2">
+                    <div class="room-info">
+                        <h3 class="room-name">Yotoqxona 2</h3>
+                        <div class="room-dimensions">
+                            <div class="dimension">
+                                <div class="dimension-label">Kenglik</div>
+                                <div class="dimension-value">3.5 m</div>
+                            </div>
+                            <div class="dimension">
+                                <div class="dimension-label">Chuqurlik</div>
+                                <div class="dimension-value">4.0 m</div>
+                            </div>
+                        </div>
+                        <div class="room-area">Maydon: 14.0 m²</div>
+                        
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <img class="room-image" src="https://media.designcafe.com/wp-content/uploads/2020/03/21012601/chandelier-luxury-modern-living-room-design.jpg" alt="Yotoqxona 3">
+                    <div class="room-info">
+                        <h3 class="room-name">Yotoqxona 3</h3>
+                        <div class="room-dimensions">
+                            <div class="dimension">
+                                <div class="dimension-label">Kenglik</div>
+                                <div class="dimension-value">3.0 m</div>
+                            </div>
+                            <div class="dimension">
+                                <div class="dimension-label">Chuqurlik</div>
+                                <div class="dimension-value">4.0 m</div>
+                            </div>
+                        </div>
+                        <div class="room-area">Maydon: 12.0 m²</div>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <img class="room-image" src="https://brabbu.com/blog/wp-content/uploads/2023/09/ehuq-chO-1.png" alt="Studiya">
+                    <div class="room-info">
+                        <h3 class="room-name">Mezon (Open Living)</h3>
+                        <div class="room-dimensions">
+                            <div class="dimension">
+                                <div class="dimension-label">Kenglik</div>
+                                <div class="dimension-value">8.0 m</div>
+                            </div>
+                            <div class="dimension">
+                                <div class="dimension-label">Chuqurlik</div>
+                                <div class="dimension-value">6.0 m</div>
+                            </div>
+                        </div>
+                        <div class="room-area">Maydon: 48.0 m²</div>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <img class="room-image" src="https://www.bocadolobo.com/en/inspiration-and-ideas/wp-content/uploads/2023/09/50-luxury-living-rooms-38-750x1024.jpg" alt="Oshxona">
+                    <div class="room-info">
+                        <h3 class="room-name">Oshxona</h3>
+                        <div class="room-dimensions">
+                            <div class="dimension">
+                                <div class="dimension-label">Kenglik</div>
+                                <div class="dimension-value">4.0 m</div>
+                            </div>
+                            <div class="dimension">
+                                <div class="dimension-label">Chuqurlik</div>
+                                <div class="dimension-value">3.5 m</div>
+                            </div>
+                        </div>
+                        <div class="room-area">Maydon: 14.0 m²</div>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <img class="room-image" src="https://media.designcafe.com/wp-content/uploads/2020/03/21012601/chandelier-luxury-modern-living-room-design.jpg" alt="Hovli">
+                    <div class="room-info">
+                        <h3 class="room-name">Hovli</h3>
+                        <div class="room-dimensions">
+                            <div class="dimension">
+                                <div class="dimension-label">Kenglik</div>
+                                <div class="dimension-value">6.0 m</div>
+                            </div>
+                            <div class="dimension">
+                                <div class="dimension-label">Chuqurlik</div>
+                                <div class="dimension-value">4.0 m</div>
+                            </div>
+                        </div>
+                        <div class="room-area">Maydon: 24.0 m²</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Qavat Plan (Floor Plan)</h2>
+            <div class="floor-plan-container">
+                <svg class="floor-plan-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Asosiy devorlar -->
+                    <rect x="20" y="20" width="360" height="260" fill="none" stroke="#00d4ff" stroke-width="3"/>
+                    
+                    <!-- Xonalar -->
+                    <!-- Mezbonlik (Open Living) -->
+                    <rect x="20" y="20" width="200" height="140" fill="rgba(0,212,255,0.1)" stroke="#00d4ff" stroke-width="1"/>
+                    <text x="120" y="90" text-anchor="middle" fill="#fff" font-size="12">Mezonlik</text>
+                    <text x="120" y="110" text-anchor="middle" fill="#00d4ff" font-size="10">48 m²</text>
+                    
+                    <!-- Oshxona -->
+                    <rect x="220" y="20" width="160" height="80" fill="rgba(123,44,191,0.1)" stroke="#7b2cbf" stroke-width="1"/>
+                    <text x="300" y="60" text-anchor="middle" fill="#fff" font-size="12">Oshxona</text>
+                    <text x="300" y="80" text-anchor="middle" fill="#7b2cbf" font-size="10">14 m²</text>
+                    
+                    <!-- Yotoqxona 1 -->
+                    <rect x="220" y="100" width="160" height="60" fill="rgba(255,193,7,0.1)" stroke="#ffc107" stroke-width="1"/>
+                    <text x="300" y="130" text-anchor="middle" fill="#fff" font-size="12">Yotoqxona 1</text>
+                    <text x="300" y="145" text-anchor="middle" fill="#ffc107" font-size="10">22.5 m²</text>
+                    
+                    <!-- коридор -->
+                    <rect x="200" y="160" width="20" height="120" fill="rgba(255,255,255,0.05)"/>
+                    
+                    <!-- Yotoqxona 2 -->
+                    <rect x="20" y="160" width="90" height="120" fill="rgba(255,193,7,0.1)" stroke="#ffc107" stroke-width="1"/>
+                    <text x="65" y="220" text-anchor="middle" fill="#fff" font-size="11">Yotoqxona 2</text>
+                    <text x="65" y="235" text-anchor="middle" fill="#ffc107" font-size="9">14 m²</text>
+                    
+                    <!-- Yotoqxona 3 -->
+                    <rect x="110" y="160" width="90" height="120" fill="rgba(255,193,7,0.1)" stroke="#ffc107" stroke-width="1"/>
+                    <text x="155" y="220" text-anchor="middle" fill="#fff" font-size="11">Yotoqxona 3</text>
+                    <text x="155" y="235" text-anchor="middle" fill="#ffc107" font-size="9">12 m²</text>
+                    
+                    <!-- Hovli -->
+                    <rect x="220" y="160" width="160" height="120" fill="rgba(76,175,80,0.1)" stroke="#4caf50" stroke-width="1"/>
+                    <text x="300" y="220" text-anchor="middle" fill="#fff" font-size="12">Hovli</text>
+                    <text x="300" y="235" text-anchor="middle" fill="#4caf50" font-size="10">24 m²</text>
+                    
+                    <!-- O'lchovlar -->
+                    <line x1="20" y1="290" x2="380" y2="290" stroke="#666" stroke-width="1"/>
+                    <text x="200" y="300" text-anchor="middle" fill="#666" font-size="10">18.5 m</text>
+                    
+                    <line x1="390" y1="20" x2="390" y2="280" stroke="#666" stroke-width="1"/>
+                    <text x="395" y="150" text-anchor="start" fill="#666" font-size="10" transform="rotate(90, 395, 150)">22.0 m</text>
+                </svg>
+            </div>
+        </section>
+
+        <footer>
+            <p>Ushbu loyiha Matrix Agent tomonidan yaratilgan</p>
+        </footer>
+    </div>
+
+<script>
+/**
+ * Iframe 元素高亮注入脚本
+ * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
+ *
+ * 使用方法：
+ * 1. 将此脚本添加到目标网站的 HTML 中
+ * 2. 或通过浏览器扩展、用户脚本等方式注入
+ */
+
+(function () {
+  "use strict";
+
+  // 检查是否在 iframe 中
+  if (window.self === window.top) {
+    return; // 不在 iframe 中，不执行
+  }
+
+  // 检查是否已经初始化过
+  if (window.__iframeHighlightInitialized) {
+    return;
+  }
+  window.__iframeHighlightInitialized = true;
+  console.log("Iframe 高亮脚本已加载");
+
+  // 创建高亮覆盖层
+  var overlay = document.createElement("div");
+  overlay.id = "iframe-highlight-overlay";
+  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
+
+  // 创建悬停高亮框（虚线边框）
+  var highlightBox = document.createElement("div");
+  highlightBox.id = "iframe-highlight-box";
+  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
+
+  // 创建选中节点的常驻高亮框（实线边框）
+  var selectedBox = document.createElement("div");
+  selectedBox.id = "iframe-selected-box";
+  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
+
+  // 创建悬停标签显示
+  var tagLabel = document.createElement("div");
+  tagLabel.id = "iframe-tag-label";
+  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
+
+  // 创建选中节点标签
+  var selectedLabel = document.createElement("div");
+  selectedLabel.id = "iframe-selected-label";
+  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
+  overlay.appendChild(highlightBox);
+  overlay.appendChild(selectedBox);
+  overlay.appendChild(tagLabel);
+  overlay.appendChild(selectedLabel);
+  document.body.appendChild(overlay);
+
+  // 存储当前选中的元素
+  var selectedElement = null;
+  var highlightEnabled = false;
+
+  // 更新选中元素的高亮显示
+  function updateSelectedHighlight(element) {
+    console.log("updateSelectedHighlight called with:", element);
+    if (!element) {
+      selectedBox.style.display = "none";
+      selectedLabel.style.display = "none";
+      selectedElement = null;
+      console.log("Cleared selected highlight");
+      return;
+    }
+    selectedElement = element;
+    var rect = element.getBoundingClientRect();
+    console.log("Selected element rect:", rect);
+
+    // 更新选中高亮框位置
+    selectedBox.style.display = "block";
+    selectedBox.style.left = "".concat(rect.left - 2, "px");
+    selectedBox.style.top = "".concat(rect.top - 2, "px");
+    selectedBox.style.width = "".concat(rect.width + 4, "px");
+    selectedBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新选中标签位置和内容
+    selectedLabel.style.display = "block";
+    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 28;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 5) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
+    if (labelLeft + labelWidth > window.innerWidth - 10) {
+      labelLeft = window.innerWidth - labelWidth - 10;
+    }
+    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
+    selectedLabel.style.top = "".concat(labelTop, "px");
+    console.log("Selected highlight positioned at:", {
+      left: selectedBox.style.left,
+      top: selectedBox.style.top,
+      width: selectedBox.style.width,
+      height: selectedBox.style.height
+    });
+  }
+  function getElementSelector(element) {
+    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
+    var segments = [];
+    var current = element;
+    while (current !== document.documentElement) {
+      var selector = '';
+      // 优先检查唯一ID
+      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
+        segments.unshift("#".concat(current.id));
+        break; // ID唯一，无需继续向上
+      }
+
+      // 生成类名选择器（取第一个有效类名）
+      var classes = Array.from(current.classList).filter(function (c) {
+        return !c.startsWith('js-');
+      });
+      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
+
+      // 生成位置索引（nth-child）
+      var tag = current.tagName.toLowerCase();
+      if (!className) {
+        var siblings = Array.from(current.parentNode.children);
+        var index = siblings.findIndex(function (el) {
+          return el === current;
+        }) + 1;
+        selector = "".concat(tag, ":nth-child(").concat(index, ")");
+      } else {
+        selector = className;
+      }
+      segments.unshift(selector);
+      current = current.parentElement;
+    }
+
+    // 处理根元素
+    if (current === document.documentElement) {
+      segments.unshift('html');
+    }
+    return segments.join(' > ');
+  }
+
+  // 获取元素文本内容
+  function getElementText(element) {
+    var _element$textContent;
+    if (element.tagName === "INPUT") {
+      return element.value || element.placeholder || "";
+    }
+    if (element.tagName === "TEXTAREA") {
+      return element.value || element.placeholder || "";
+    }
+    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
+    return text.length > 50 ? text.substring(0, 50) + "..." : text;
+  }
+
+  // 获取元素属性信息
+  function getElementAttributes(element) {
+    var attrs = {};
+    for (var i = 0; i < element.attributes.length; i++) {
+      var attr = element.attributes[i];
+      attrs[attr.name] = attr.value;
+    }
+    return attrs;
+  }
+
+  // 鼠标悬停事件处理
+  function handleMouseOver(e) {
+    if (!highlightEnabled) return;
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免高亮 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 如果是已选中的元素，不显示悬停高亮
+    if (target === selectedElement) {
+      highlightBox.style.display = "none";
+      tagLabel.style.display = "none";
+      return;
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+
+    // 更新悬停高亮框位置
+    highlightBox.style.display = "block";
+    highlightBox.style.left = "".concat(rect.left - 2, "px");
+    highlightBox.style.top = "".concat(rect.top - 2, "px");
+    highlightBox.style.width = "".concat(rect.width + 4, "px");
+    highlightBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新标签位置和内容
+    tagLabel.style.display = "block";
+    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 22;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 0) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
+      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
+    }
+    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
+    tagLabel.style.top = "".concat(labelTop, "px");
+
+    // 发送消息到父窗口
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 鼠标离开事件处理
+  function handleMouseOut(e) {
+    if (!highlightEnabled) return;
+    var relatedTarget = e.relatedTarget;
+
+    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
+    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
+      return;
+    }
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: null,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 点击事件处理
+  function handleClick(e) {
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免处理 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 检查是否是交互元素，这些元素需要保留默认行为
+    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
+
+    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
+    if (highlightEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+    console.log("Element clicked:", {
+      tagName: target.tagName,
+      selector: selector,
+      rect: rect
+    });
+
+    // 立即更新选中高亮
+    updateSelectedHighlight(target);
+
+    // 隐藏悬停高亮，因为现在是选中状态
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-click",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 监听来自父窗口的消息
+  function handleParentMessage(event) {
+    console.log("Received message from parent:", event.data);
+    if (event.data.type === "iframe-highlight-toggle") {
+      var enabled = event.data.enabled;
+      console.log("Highlight toggle:", enabled);
+      if (enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "enable-iframe-highlight") {
+      console.log("Enable iframe highlight");
+      enableHighlight();
+    } else if (event.data.type === "disable-iframe-highlight") {
+      console.log("Disable iframe highlight");
+      disableHighlight();
+    } else if (event.data.type === "toggle-iframe-highlight") {
+      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
+      console.log("Toggle iframe highlight to:", _enabled);
+      if (_enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "update-selected-element") {
+      var selector = event.data.selector;
+      console.log("Update selected element with selector:", selector);
+      if (selector) {
+        try {
+          var element = document.querySelector(selector);
+          console.log("Found element by selector:", element);
+          updateSelectedHighlight(element);
+        } catch (error) {
+          console.warn("Failed to select element:", error);
+          updateSelectedHighlight(null);
+        }
+      } else {
+        updateSelectedHighlight(null);
+      }
+    } else if (event.data.type === "clear-selected-element") {
+      console.log("Clear selected element");
+      updateSelectedHighlight(null);
+    }
+  }
+
+  // 启用高亮功能
+  function enableHighlight() {
+    console.log("Enabling highlight");
+    document.addEventListener("mouseover", handleMouseOver, true);
+    document.addEventListener("mouseout", handleMouseOut, true);
+    document.addEventListener("click", handleClick, true);
+    highlightEnabled = true;
+    overlay.style.display = "block";
+  }
+
+  // 禁用高亮功能
+  function disableHighlight() {
+    console.log("Disabling highlight");
+    highlightEnabled = false;
+    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
+    // 这样可以保留选中状态的显示
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
+  }
+
+  // 完全禁用高亮功能（移除所有监听器）
+  function fullyDisableHighlight() {
+    console.log("Fully disabling highlight");
+    highlightEnabled = false;
+    document.removeEventListener("mouseover", handleMouseOver, true);
+    document.removeEventListener("mouseout", handleMouseOut, true);
+    document.removeEventListener("click", handleClick, true);
+    overlay.style.display = "none";
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    selectedBox.style.display = "none";
+    selectedLabel.style.display = "none";
+  }
+
+  // 添加事件监听
+  enableHighlight();
+  window.addEventListener("message", handleParentMessage);
+
+  // 暴露全局函数供外部调用
+  window.__iframeHighlightControl = {
+    enable: enableHighlight,
+    disable: disableHighlight,
+    fullyDisable: fullyDisableHighlight,
+    isEnabled: function isEnabled() {
+      return highlightEnabled;
+    },
+    getSelectedElement: function getSelectedElement() {
+      return selectedElement;
+    },
+    updateSelected: updateSelectedHighlight,
+    // 通过消息发送开关控制
+    sendToggleMessage: function sendToggleMessage(enabled) {
+      window.parent.postMessage({
+        type: 'iframe-highlight-status',
+        enabled: enabled || highlightEnabled,
+        source: 'iframe-highlight-injector'
+      }, '*');
+    }
+  };
+
+  // 通知父窗口脚本已加载
+  try {
+    window.parent.postMessage({
+      type: "iframe-highlight-ready",
+      data: {
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        timestamp: Date.now()
+      },
+      source: "iframe-highlight-injector"
+    }, "*");
+  } catch (error) {
+    console.warn("无法发送就绪消息到父窗口:", error);
+  }
+
+  // 清理函数
+  window.__iframeHighlightCleanup = function () {
+    fullyDisableHighlight();
+    window.removeEventListener("message", handleParentMessage);
+    if (overlay.parentElement) {
+      overlay.parentElement.removeChild(overlay);
+    }
+    delete window.__iframeHighlightInitialized;
+    delete window.__iframeHighlightCleanup;
+  };
+})();
+
+</script>
+<style>
+#minimax-floating-ball {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 12px;
+  background: #222222;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  color: #F8F8F8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#minimax-floating-ball:hover {
+  transform: translateY(-2px);
+  background: #383838;
+}
+.minimax-ball-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.minimax-logo-wave {
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%27none%27%20width%3D%27100%25%27%20height%3D%27100%25%27%20overflow%3D%27visible%27%20style%3D%27display%3A%20block%3B%27%20viewBox%3D%270%200%20170.136%20138.225%27%20fill%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Cg%20id%3D%27Frame%202116748449%27%3E%3Cpath%20id%3D%27Subtract%27%20d%3D%27M170%20101.783C170%20105.144%20168.49%20108.327%20165.886%20110.453L134.963%20135.702C132.964%20137.334%20130.463%20138.225%20127.883%20138.225H10.4938C4.69824%20138.225%200%20133.527%200%20127.732V39.2289C0%2035.8597%201.51758%2032.6698%204.13162%2030.5442L38.5402%202.56547C40.536%200.942662%2043.0298%200.0567377%2045.602%200.0567377H159.506C165.302%200.0567377%20170%204.75498%20170%2010.5506V101.783Z%27%20fill%3D%27black%27%20style%3D%27fill%3Ablack%3Bfill-opacity%3A1%3B%27/%3E%3Cpath%20id%3D%27Subtract_2%27%20d%3D%27M149.011%2094.4632C149.011%2096.1471%20148.253%2097.7415%20146.946%2098.8043L125.893%20115.936C124.895%20116.748%20123.648%20117.191%20122.361%20117.191H24.6479C22.716%20117.191%2021.15%20115.625%2021.15%20113.693V46.1166C21.15%2044.4267%2021.9135%2042.8274%2023.2274%2041.7648L47.367%2022.2437C48.3638%2021.4376%2049.607%2020.9982%2050.8888%2020.9988L145.514%2021.0427C147.446%2021.0436%20149.011%2022.6094%20149.011%2024.5406V94.4632Z%27%20fill%3D%27white%27%20style%3D%27fill%3Awhite%3Bfill-opacity%3A1%3B%27/%3E%3Cpath%20id%3D%27Rectangle%20111142564%27%20d%3D%27M42.111%2080.8025C42.111%2077.7115%2044.6167%2075.2057%2047.7077%2075.2057H60.9999C64.0908%2075.2057%2066.5966%2077.7115%2066.5966%2080.8025V121.029H42.111V80.8025Z%27%20fill%3D%27black%27%20style%3D%27fill%3Ablack%3Bfill-opacity%3A1%3B%27/%3E%3Cpath%20id%3D%27Rectangle%20111142567%27%20d%3D%27M79.1894%2080.8025C79.1894%2077.7115%2081.6952%2075.2057%2084.7861%2075.2057H98.0783C101.169%2075.2057%20103.675%2077.7115%20103.675%2080.8025V121.029H79.1894V80.8025Z%27%20fill%3D%27black%27%20style%3D%27fill%3Ablack%3Bfill-opacity%3A1%3B%27/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px 11px;
+  background-color: #8FD1FF;
+  border-radius: 4px;
+}
+
+.minimax-ball-text {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.minimax-close-icon {
+  margin-left: 8px;
+  font-size: 16px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.minimax-close-icon:hover {
+  opacity: 1;
+}
+</style>
+<div id="minimax-floating-ball">
+  <div class="minimax-ball-content">
+    <div class="minimax-logo-wave"></div>
+    <span class="minimax-ball-text">Created by MiniMax Agent</span>
+  </div>
+  <div class="minimax-close-icon">×</div>
+</div>
+<script>
+// Initialize floating ball functionality
+function initFloatingBall() {
+  const ball = document.getElementById('minimax-floating-ball');
+  if (!ball) return;
+
+  // Initial animation
+  ball.style.opacity = '0';
+  ball.style.transform = 'translateY(20px)';
+
+  setTimeout(() => {
+    ball.style.opacity = '1';
+    ball.style.transform = 'translateY(0)';
+  }, 500);
+
+  // Handle logo click
+  const ballContent = ball.querySelector('.minimax-ball-content');
+  ballContent.addEventListener('click', function (e) {
+    e.stopPropagation();
+    window.open('https://agent.minimax.io/', '_blank');
+    ball.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      ball.style.transform = 'scale(1)';
+    }, 100);
+  });
+
+  // Handle close button click
+  const closeIcon = ball.querySelector('.minimax-close-icon');
+  closeIcon.addEventListener('click', function (e) {
+    e.stopPropagation();
+    ball.style.opacity = '0';
+    ball.style.transform = 'translateY(20px)';
+
+    setTimeout(() => {
+      ball.style.display = 'none';
+    }, 300);
+  });
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', initFloatingBall); 
+</script>
+</body>
+</html>
