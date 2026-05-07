@@ -101,7 +101,7 @@
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 14px; padding: 1.5rem 1rem; text-align: center;
       transition: transform .3s, border-color .3s, box-shadow .3s;
-      cursor: default;
+      cursor: pointer;
     }
     .skill-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 8px 30px rgba(124,58,237,.2); }
     .skill-icon { font-size: 2.2rem; margin-bottom: .6rem; }
@@ -115,6 +115,7 @@
       background: var(--bg); border: 1px solid var(--border);
       border-radius: 16px; overflow: hidden;
       transition: transform .3s, box-shadow .3s;
+      cursor: pointer;
     }
     .project-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
     .project-img {
@@ -163,10 +164,27 @@
     @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
 
+    /* ── MODAL ── */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,.85); backdrop-filter: blur(8px); z-index: 200; display: none; align-items: center; justify-content: center; padding: 2rem; animation: fadeIn .3s ease; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2.5rem; position: relative; animation: slideUp .4s ease; }
+    .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: var(--bg); border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+    .modal-close:hover { background: var(--border); }
+    .modal-title { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .modal-text { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+    .modal-grid { display: grid; gap: 1rem; margin-top: 1.5rem; }
+    .modal-item { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; }
+    .modal-item-title { font-weight: 700; color: var(--text); margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem; }
+    .modal-item-desc { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+    .modal-badge { display: inline-block; background: rgba(124,58,237,.15); color: #a78bfa; padding: .3rem .8rem; border-radius: 999px; font-size: .75rem; font-weight: 600; margin-right: .5rem; margin-top: .5rem; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .stats { gap: 1.5rem; }
+      .modal-content { padding: 1.5rem; }
     }
   </style>
 </head>
@@ -211,14 +229,14 @@
   <h2 class="section-title">Ko'nikmalarim</h2>
   <p class="section-sub">Ishlatadigan texnologiyalarim</p>
   <div class="skills-grid">
-    <div class="skill-card"><div class="skill-icon">🌐</div><div class="skill-name">HTML & CSS</div><div class="skill-level">Expert</div></div>
-    <div class="skill-card"><div class="skill-icon">⚡</div><div class="skill-name">JavaScript</div><div class="skill-level">Advanced</div></div>
-    <div class="skill-card"><div class="skill-icon">⚛️</div><div class="skill-name">React</div><div class="skill-level">Advanced</div></div>
-    <div class="skill-card"><div class="skill-icon">🟢</div><div class="skill-name">Node.js</div><div class="skill-level">Intermediate</div></div>
-    <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><div class="skill-level">Intermediate</div></div>
-    <div class="skill-card"><div class="skill-icon">🗄️</div><div class="skill-name">SQL / NoSQL</div><div class="skill-level">Intermediate</div></div>
-    <div class="skill-card"><div class="skill-icon">☁️</div><div class="skill-name">AWS</div><div class="skill-level">Beginner</div></div>
-    <div class="skill-card"><div class="skill-icon">🐳</div><div class="skill-name">Docker</div><div class="skill-level">Beginner</div></div>
+    <div class="skill-card" onclick="openModal('skill1')"><div class="skill-icon">🌐</div><div class="skill-name">HTML & CSS</div><div class="skill-level">Expert</div></div>
+    <div class="skill-card" onclick="openModal('skill2')"><div class="skill-icon">⚡</div><div class="skill-name">JavaScript</div><div class="skill-level">Advanced</div></div>
+    <div class="skill-card" onclick="openModal('skill3')"><div class="skill-icon">⚛️</div><div class="skill-name">React</div><div class="skill-level">Advanced</div></div>
+    <div class="skill-card" onclick="openModal('skill4')"><div class="skill-icon">🟢</div><div class="skill-name">Node.js</div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-card" onclick="openModal('skill5')"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-card" onclick="openModal('skill6')"><div class="skill-icon">🗄️</div><div class="skill-name">SQL / NoSQL</div><div class="skill-level">Intermediate</div></div>
+    <div class="skill-card" onclick="openModal('skill7')"><div class="skill-icon">☁️</div><div class="skill-name">AWS</div><div class="skill-level">Beginner</div></div>
+    <div class="skill-card" onclick="openModal('skill8')"><div class="skill-icon">🐳</div><div class="skill-name">Docker</div><div class="skill-level">Beginner</div></div>
   </div>
 </section>
 
@@ -227,31 +245,31 @@
   <h2 class="section-title">Loyihalarim</h2>
   <p class="section-sub">So'nggi ishlarimdan namunalar</p>
   <div class="projects-grid">
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('project1')">
       <div class="project-img" style="background:linear-gradient(135deg,#1e1b4b,#312e81)">🛒</div>
       <div class="project-body">
         <div class="project-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span></div>
         <div class="project-title">ShopEasy — E-commerce</div>
         <p class="project-desc">To'liq funksional onlayn do'kon. Karta to'lovi, admin panel va real-time buyurtmalar.</p>
-        <div class="project-links"><a href="#">🔗 Demo</a><a href="#">📂 GitHub</a></div>
+        <div class="project-links"><a href="#" onclick="event.stopPropagation()">🔗 Demo</a><a href="#" onclick="event.stopPropagation()">📂 GitHub</a></div>
       </div>
     </div>
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('project2')">
       <div class="project-img" style="background:linear-gradient(135deg,#064e3b,#065f46)">💬</div>
       <div class="project-body">
         <div class="project-tags"><span class="tag">React</span><span class="tag">Socket.io</span><span class="tag">Express</span></div>
         <div class="project-title">ChatFlow — Messenjer</div>
         <p class="project-desc">Real-time chat ilovasi. Guruh suhbatlari, fayl yuborish va online holat ko'rsatgichi.</p>
-        <div class="project-links"><a href="#">🔗 Demo</a><a href="#">📂 GitHub</a></div>
+        <div class="project-links"><a href="#" onclick="event.stopPropagation()">🔗 Demo</a><a href="#" onclick="event.stopPropagation()">📂 GitHub</a></div>
       </div>
     </div>
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('project3')">
       <div class="project-img" style="background:linear-gradient(135deg,#1e3a5f,#1e40af)">📊</div>
       <div class="project-body">
         <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span></div>
         <div class="project-title">DataViz — Dashboard</div>
         <p class="project-desc">Biznes ma'lumotlarini vizualizatsiya qiluvchi analitika paneli. Interaktiv grafiklar.</p>
-        <div class="project-links"><a href="#">🔗 Demo</a><a href="#">📂 GitHub</a></div>
+        <div class="project-links"><a href="#" onclick="event.stopPropagation()">🔗 Demo</a><a href="#" onclick="event.stopPropagation()">📂 GitHub</a></div>
       </div>
     </div>
   </div>
@@ -276,6 +294,14 @@
 <footer>
   <p>© 2025 <strong>Elnur</strong> — Barcha huquqlar himoyalangan. Sayt <a href="#">❤️ bilan</a> yaratildi.</p>
 </footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="closeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
 
 <script>
   // Smooth reveal on scroll
@@ -302,6 +328,150 @@
     if (!filled) { alert('Iltimos, barcha maydonlarni to\'ldiring!'); return; }
     alert('✅ Xabaringiz yuborildi! Tez orada bog\'lanaman.');
     inputs.forEach(i => i.value = '');
+  });
+
+  // Modal content
+  const modalData = {
+    project1: {
+      title: '🛒 ShopEasy — E-commerce Platform',
+      text: 'To\'liq funksional onlayn do\'kon platformasi. Mijozlar uchun qulay interfeys va admin uchun kuchli boshqaruv paneli.',
+      items: [
+        { title: '💳 To\'lov tizimi', desc: 'Stripe va PayPal integratsiyasi. Xavfsiz to\'lovlar va avtomatik invoice yaratish.' },
+        { title: '📦 Mahsulot boshqaruvi', desc: 'Admin panel orqali mahsulot qo\'shish, tahrirlash, kategoriyalash va inventar nazorati.' },
+        { title: '🚚 Buyurtma kuzatuvi', desc: 'Real-time buyurtma holati, SMS/Email bildirishnomalar va yetkazib berish integratsiyasi.' },
+        { title: '📊 Analitika', desc: 'Sotuvlar statistikasi, eng ko\'p sotiladigan mahsulotlar va mijozlar tahlili.' }
+      ]
+    },
+    project2: {
+      title: '💬 ChatFlow — Real-time Messenger',
+      text: 'Zamonaviy messenjer ilovasi. Tezkor xabar almashinuvi, guruh suhbatlari va multimedia qo\'llab-quvvatlash.',
+      items: [
+        { title: '⚡ Real-time chat', desc: 'Socket.io yordamida bir zumda xabar yetkazish. Typing indicator va read receipts.' },
+        { title: '👥 Guruh suhbatlari', desc: 'Cheksiz a\'zolar bilan guruh yaratish, admin huquqlari va guruh sozlamalari.' },
+        { title: '📎 Fayl yuborish', desc: 'Rasm, video, audio va hujjatlarni yuborish. Avtomatik siqish va preview.' },
+        { title: '🔔 Push bildirishnomalar', desc: 'Yangi xabarlar uchun real-time bildirishnomalar va ovozli signal.' }
+      ]
+    },
+    project3: {
+      title: '📊 DataViz — Analytics Dashboard',
+      text: 'Biznes ma\'lumotlarini vizualizatsiya qiluvchi kuchli analitika paneli. Real-time grafiklar va hisobotlar.',
+      items: [
+        { title: '📈 Interaktiv grafiklar', desc: 'Chart.js va D3.js yordamida chiziqli, doira va bar grafiklar. Zoom va filter imkoniyatlari.' },
+        { title: '🔄 Real-time yangilanish', desc: 'Ma\'lumotlar avtomatik yangilanadi. WebSocket orqali jonli monitoring.' },
+        { title: '📥 Export funksiyasi', desc: 'Hisobotlarni PDF, Excel va CSV formatida yuklab olish imkoniyati.' },
+        { title: '🎯 Custom filtrlash', desc: 'Sana, kategoriya va boshqa parametrlar bo\'yicha ma\'lumotlarni filtrlash.' }
+      ]
+    },
+    skill1: {
+      title: '🌐 HTML & CSS — Expert',
+      text: 'Semantic HTML va zamonaviy CSS texnologiyalarida chuqur bilim. Responsive va accessibility-friendly dizaynlar yarataman.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">HTML5</span><span class="modal-badge">CSS3</span><span class="modal-badge">Flexbox</span><span class="modal-badge">Grid</span><span class="modal-badge">Animations</span><span class="modal-badge">Sass/SCSS</span>' },
+        { title: 'Tajriba', desc: '5+ yillik tajriba. 100+ responsive veb-sahifa yaratdim. Pixel-perfect dizayn implementatsiyasi.' },
+        { title: 'Loyihalar', desc: 'Landing pages, admin dashboards, e-commerce saytlar va corporate veb-saytlar.' }
+      ]
+    },
+    skill2: {
+      title: '⚡ JavaScript — Advanced',
+      text: 'Modern JavaScript (ES6+) va asynchronous dasturlashda kuchli ko\'nikma. Clean va maintainable kod yozaman.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">ES6+</span><span class="modal-badge">Async/Await</span><span class="modal-badge">Promises</span><span class="modal-badge">DOM API</span><span class="modal-badge">Fetch/Axios</span>' },
+        { title: 'Tajriba', desc: '4+ yillik tajriba. Complex SPA va interactive web apps yaratdim.' },
+        { title: 'Qo\'llash', desc: 'Form validation, API integration, real-time features, animations va state management.' }
+      ]
+    },
+    skill3: {
+      title: '⚛️ React — Advanced',
+      text: 'React ekotizimida professional darajada ishlash. Hooks, Context API va performance optimization.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">React 18</span><span class="modal-badge">Hooks</span><span class="modal-badge">Context API</span><span class="modal-badge">React Router</span><span class="modal-badge">Redux</span>' },
+        { title: 'Tajriba', desc: '3+ yillik tajriba. 30+ React loyiha yaratdim. Component library development.' },
+        { title: 'Loyihalar', desc: 'E-commerce platforms, dashboards, social media apps va real-time chat applications.' }
+      ]
+    },
+    skill4: {
+      title: '🟢 Node.js — Intermediate',
+      text: 'Backend development uchun Node.js va Express.js. RESTful API va real-time server yaratish.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">Node.js</span><span class="modal-badge">Express</span><span class="modal-badge">Socket.io</span><span class="modal-badge">JWT</span><span class="modal-badge">Bcrypt</span>' },
+        { title: 'Tajriba', desc: '2+ yillik tajriba. RESTful API, authentication va real-time features.' },
+        { title: 'Qo\'llash', desc: 'API development, authentication systems, file uploads va WebSocket servers.' }
+      ]
+    },
+    skill5: {
+      title: '🐍 Python — Intermediate',
+      text: 'Python bilan backend development va data processing. Django va FastAPI frameworks.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">Python 3</span><span class="modal-badge">Django</span><span class="modal-badge">FastAPI</span><span class="modal-badge">Pandas</span><span class="modal-badge">NumPy</span>' },
+        { title: 'Tajriba', desc: '2+ yillik tajriba. Web APIs, automation scripts va data analysis.' },
+        { title: 'Loyihalar', desc: 'REST APIs, web scraping tools, data visualization va automation scripts.' }
+      ]
+    },
+    skill6: {
+      title: '🗄️ SQL / NoSQL — Intermediate',
+      text: 'Relational va NoSQL ma\'lumotlar bazalari bilan ishlash. Database design va optimization.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">PostgreSQL</span><span class="modal-badge">MySQL</span><span class="modal-badge">MongoDB</span><span class="modal-badge">Redis</span><span class="modal-badge">Prisma</span>' },
+        { title: 'Tajriba', desc: '2+ yillik tajriba. Database design, queries optimization va migrations.' },
+        { title: 'Qo\'llash', desc: 'Schema design, complex queries, indexing, transactions va data modeling.' }
+      ]
+    },
+    skill7: {
+      title: '☁️ AWS — Beginner',
+      text: 'Amazon Web Services asoslari. Cloud deployment va serverless architecture.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">EC2</span><span class="modal-badge">S3</span><span class="modal-badge">Lambda</span><span class="modal-badge">RDS</span><span class="modal-badge">CloudFront</span>' },
+        { title: 'Tajriba', desc: '1+ yillik tajriba. Basic deployment va cloud storage integration.' },
+        { title: 'Qo\'llash', desc: 'Static hosting, file storage, serverless functions va database hosting.' }
+      ]
+    },
+    skill8: {
+      title: '🐳 Docker — Beginner',
+      text: 'Containerization asoslari. Development va production environments uchun Docker.',
+      items: [
+        { title: 'Texnologiyalar', desc: '<span class="modal-badge">Docker</span><span class="modal-badge">Docker Compose</span><span class="modal-badge">Dockerfile</span><span class="modal-badge">Containers</span>' },
+        { title: 'Tajriba', desc: '1+ yillik tajriba. Basic containerization va multi-container apps.' },
+        { title: 'Qo\'llash', desc: 'Development environments, microservices va consistent deployments.' }
+      ]
+    }
+  };
+
+  function openModal(id) {
+    const data = modalData[id];
+    if (!data) return;
+    
+    let itemsHTML = '';
+    if (data.items) {
+      itemsHTML = '<div class="modal-grid">';
+      data.items.forEach(item => {
+        itemsHTML += `
+          <div class="modal-item">
+            <div class="modal-item-title">${item.title}</div>
+            <div class="modal-item-desc">${item.desc}</div>
+          </div>
+        `;
+      });
+      itemsHTML += '</div>';
+    }
+    
+    document.getElementById('modal-body').innerHTML = `
+      <h2 class="modal-title">${data.title}</h2>
+      <p class="modal-text">${data.text}</p>
+      ${itemsHTML}
+    `;
+    
+    document.getElementById('modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(event) {
+    if (event && event.target.id !== 'modal') return;
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 </script>
 </body>

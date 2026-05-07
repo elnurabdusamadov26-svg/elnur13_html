@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>qasoskorlar</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: white;
+}
+
+header {
+    background: #111;
+    padding: 15px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: orange;
+}
+
+.hero {
+    height: 400px;
+    background: url('https://wallpaperaccess.com/full/329583.jpg') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.hero h1 {
+    font-size: 50px;
+    margin: 0;
+}
+
+.hero button {
+    padding: 15px 30px;
+    background: orange;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.game {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#player {
+    width: 40px;
+    height: 40px;
+    background: orange;
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>qasoskorlar</header>
+
+<div class="hero">
+    <h1>BATTLE START</h1>
+    <button onclick="startGame()">Start Game</button>
+</div>
+
+<div class="game">
+    <p>W, A, S, D tugmalar bilan harakatlan</p>
+</div>
+
+<div id="player"></div>
+
+<script>
+let player = document.getElementById("player");
+let x = 200;
+let y = 200;
+
+document.addEventListener("keydown", function(e) {
+    if(e.key === "w") y -= 10;
+    if(e.key === "s") y += 10;
+    if(e.key === "a") x -= 10;
+    if(e.key === "d") x += 10;
+
+    player.style.left = x + "px";
+    player.style.top = y + "px";
+});
+
+function startGame() {
+    alert("O'yin boshlandi!");
+}
+</script>
+
+</body>
+</html>
