@@ -3,98 +3,479 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>qasoskorlar</title>
-
+<title>tanka</title>
 <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-    margin: 0;
+    background: #0a0a0a;
     font-family: Arial;
-    background: black;
     color: white;
+    overflow: hidden;
 }
 
-header {
-    background: #111;
-    padding: 15px;
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    color: orange;
-}
-
-.hero {
-    height: 400px;
-    background: url('https://wallpaperaccess.com/full/329583.jpg') center/cover;
+#menu {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0a0a, #1a0a00);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    z-index: 10;
 }
 
-.hero h1 {
-    font-size: 50px;
-    margin: 0;
+#menu h1 {
+    font-size: 64px;
+    color: orange;
+    text-shadow: 0 0 30px orange;
+    letter-spacing: 6px;
+    margin-bottom: 10px;
 }
 
-.hero button {
-    padding: 15px 30px;
+#menu p {
+    color: #aaa;
+    margin-bottom: 40px;
+    font-size: 16px;
+}
+
+#menu button {
+    padding: 16px 50px;
     background: orange;
     border: none;
-    font-size: 18px;
+    font-size: 22px;
+    font-weight: bold;
     cursor: pointer;
+    border-radius: 6px;
+    color: black;
+    transition: 0.2s;
+    box-shadow: 0 0 20px orange;
 }
 
-.game {
+#menu button:hover { transform: scale(1.07); background: #ffb300; }
+
+.controls-hint {
+    margin-top: 30px;
+    color: #555;
+    font-size: 14px;
     text-align: center;
-    margin-top: 40px;
+    line-height: 2;
 }
 
-#player {
-    width: 40px;
-    height: 40px;
+#gameOver {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+#gameOver h2 {
+    font-size: 60px;
+    color: red;
+    text-shadow: 0 0 20px red;
+    margin-bottom: 10px;
+}
+
+#gameOver .final-score {
+    font-size: 28px;
+    color: orange;
+    margin-bottom: 30px;
+}
+
+#gameOver button {
+    padding: 14px 44px;
     background: orange;
-    position: absolute;
-    top: 200px;
-    left: 200px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    color: black;
+    transition: 0.2s;
 }
 
+#gameOver button:hover { transform: scale(1.07); }
+
+#hud {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 12px 24px;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+    font-size: 18px;
+}
+
+#hud span { color: orange; font-weight: bold; }
+
+canvas {
+    display: block;
+    background: #111;
+}
+
+#levelUp {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: orange;
+    text-shadow: 0 0 20px orange;
+    z-index: 8;
+    pointer-events: none;
+    animation: fadeOut 1.5s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translate(-50%, -60%); }
+    100% { opacity: 0; transform: translate(-50%, -80%); }
+}
 </style>
 </head>
-
 <body>
 
-<header>qasoskorlar</header>
-
-<div class="hero">
-    <h1>BATTLE START</h1>
-    <button onclick="startGame()">Start Game</button>
+<div id="menu">
+    <h1>⚔ tanka</h1>
+    <p>Dushmanlarga tegmang, omon qoling!</p>
+    <button onclick="startGame()">O'YINNI BOSHLASH</button>
+    <div class="controls-hint">
+        🎮 Boshqaruv: <strong>W A S D</strong> yoki <strong>↑ ← ↓ →</strong><br>
+        🔫 Otish: <strong>SPACE</strong> yoki <strong>Sichqoncha chap tugma</strong>
+    </div>
 </div>
 
-<div class="game">
-    <p>W, A, S, D tugmalar bilan harakatlan</p>
+<div id="gameOver">
+    <h2>GAME OVER</h2>
+    <div class="final-score">Ball: <span id="finalScore">0</span></div>
+    <button onclick="startGame()">QAYTA O'YNASH</button>
 </div>
 
-<div id="player"></div>
+<div id="hud">
+    Score: <span id="scoreDisplay">0</span> &nbsp;|&nbsp;
+    Level: <span id="levelDisplay">1</span> &nbsp;|&nbsp;
+    ❤️ <span id="hpDisplay">3</span>
+</div>
+
+<div id="levelUp">LEVEL UP! 🔥</div>
+
+<canvas id="canvas"></canvas>
 
 <script>
-let player = document.getElementById("player");
-let x = 200;
-let y = 200;
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const hud = document.getElementById('hud');
 
-document.addEventListener("keydown", function(e) {
-    if(e.key === "w") y -= 10;
-    if(e.key === "s") y += 10;
-    if(e.key === "a") x -= 10;
-    if(e.key === "d") x += 10;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    player.style.left = x + "px";
-    player.style.top = y + "px";
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+// --- Game State ---
+let state = {
+    running: false,
+    score: 0,
+    level: 1,
+    hp: 3,
+    invincible: 0,
+    enemySpawnTimer: 0,
+    spawnInterval: 90,
+    frame: 0
+};
+
+let player = {};
+let enemies = [];
+let bullets = [];
+let particles = [];
+let keys = {};
+let mouse = { x: 0, y: 0 };
+
+// --- Input ---
+document.addEventListener('keydown', e => { keys[e.key] = true; });
+document.addEventListener('keyup', e => { keys[e.key] = false; });
+canvas.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+canvas.addEventListener('click', e => { if(state.running) shoot(e.clientX, e.clientY); });
+document.addEventListener('keydown', e => {
+    if(e.code === 'Space' && state.running) {
+        e.preventDefault();
+        shoot(mouse.x, mouse.y);
+    }
 });
 
 function startGame() {
-    alert("O'yin boshlandi!");
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('gameOver').style.display = 'none';
+    hud.style.display = 'flex';
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    player = {
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        w: 36, h: 36,
+        speed: 4,
+        color: 'orange',
+        angle: 0
+    };
+
+    enemies = [];
+    bullets = [];
+    particles = [];
+    keys = {};
+
+    state = {
+        running: true,
+        score: 0,
+        level: 1,
+        hp: 3,
+        invincible: 0,
+        enemySpawnTimer: 0,
+        spawnInterval: 80,
+        frame: 0
+    };
+
+    updateHUD();
+    requestAnimationFrame(loop);
+}
+
+function shoot(tx, ty) {
+    let dx = tx - player.x;
+    let dy = ty - player.y;
+    let dist = Math.hypot(dx, dy);
+    bullets.push({
+        x: player.x, y: player.y,
+        vx: (dx / dist) * 10,
+        vy: (dy / dist) * 10,
+        r: 6, life: 80
+    });
+}
+
+function spawnEnemy() {
+    let side = Math.floor(Math.random() * 4);
+    let x, y;
+    if (side === 0) { x = Math.random() * canvas.width; y = -30; }
+    else if (side === 1) { x = canvas.width + 30; y = Math.random() * canvas.height; }
+    else if (side === 2) { x = Math.random() * canvas.width; y = canvas.height + 30; }
+    else { x = -30; y = Math.random() * canvas.height; }
+
+    let speed = 1.2 + state.level * 0.3 + Math.random() * 0.5;
+    let size = 20 + Math.random() * 16;
+    let hp = state.level >= 3 ? 2 : 1;
+
+    enemies.push({ x, y, size, speed, hp, angle: 0 });
+}
+
+function spawnParticles(x, y, color, count) {
+    for (let i = 0; i < count; i++) {
+        let angle = Math.random() * Math.PI * 2;
+        let speed = 1 + Math.random() * 4;
+        particles.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            r: 2 + Math.random() * 4,
+            life: 30 + Math.random() * 20,
+            color
+        });
+    }
+}
+
+function updateHUD() {
+    document.getElementById('scoreDisplay').textContent = state.score;
+    document.getElementById('levelDisplay').textContent = state.level;
+    document.getElementById('hpDisplay').textContent = '❤️'.repeat(state.hp);
+}
+
+function showLevelUp() {
+    let el = document.getElementById('levelUp');
+    el.textContent = `LEVEL ${state.level}! 🔥`;
+    el.style.display = 'block';
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = 'fadeOut 1.5s forwards';
+    setTimeout(() => el.style.display = 'none', 1500);
+}
+
+function gameOver() {
+    state.running = false;
+    hud.style.display = 'none';
+    document.getElementById('finalScore').textContent = state.score;
+    document.getElementById('gameOver').style.display = 'flex';
+}
+
+function loop() {
+    if (!state.running) return;
+    state.frame++;
+
+    // --- Move Player ---
+    let spd = player.speed;
+    if ((keys['w'] || keys['ArrowUp'])    && player.y - player.h/2 > 0)              player.y -= spd;
+    if ((keys['s'] || keys['ArrowDown'])  && player.y + player.h/2 < canvas.height)  player.y += spd;
+    if ((keys['a'] || keys['ArrowLeft'])  && player.x - player.w/2 > 0)              player.x -= spd;
+    if ((keys['d'] || keys['ArrowRight']) && player.x + player.w/2 < canvas.width)   player.x += spd;
+
+    player.angle = Math.atan2(mouse.y - player.y, mouse.x - player.x);
+
+    // --- Spawn Enemies ---
+    state.enemySpawnTimer++;
+    if (state.enemySpawnTimer >= state.spawnInterval) {
+        spawnEnemy();
+        state.enemySpawnTimer = 0;
+    }
+
+    // --- Level Up ---
+    let newLevel = 1 + Math.floor(state.score / 10);
+    if (newLevel > state.level) {
+        state.level = newLevel;
+        state.spawnInterval = Math.max(30, 80 - state.level * 8);
+        showLevelUp();
+        updateHUD();
+    }
+
+    // --- Update Bullets ---
+    bullets = bullets.filter(b => b.life > 0);
+    bullets.forEach(b => {
+        b.x += b.vx;
+        b.y += b.vy;
+        b.life--;
+    });
+
+    // --- Update Enemies ---
+    enemies.forEach(en => {
+        let dx = player.x - en.x;
+        let dy = player.y - en.y;
+        let dist = Math.hypot(dx, dy);
+        en.x += (dx / dist) * en.speed;
+        en.y += (dy / dist) * en.speed;
+        en.angle += 0.05;
+    });
+
+    // --- Bullet vs Enemy ---
+    bullets.forEach(b => {
+        enemies.forEach(en => {
+            let dist = Math.hypot(b.x - en.x, b.y - en.y);
+            if (dist < en.size + b.r) {
+                b.life = 0;
+                en.hp--;
+                spawnParticles(en.x, en.y, '#ff6600', 6);
+                if (en.hp <= 0) {
+                    en.dead = true;
+                    state.score++;
+                    spawnParticles(en.x, en.y, 'red', 12);
+                    updateHUD();
+                }
+            }
+        });
+    });
+    enemies = enemies.filter(en => !en.dead);
+
+    // --- Player vs Enemy ---
+    if (state.invincible <= 0) {
+        enemies.forEach(en => {
+            let dist = Math.hypot(player.x - en.x, player.y - en.y);
+            if (dist < en.size + player.w / 2) {
+                state.hp--;
+                state.invincible = 90;
+                spawnParticles(player.x, player.y, 'white', 10);
+                updateHUD();
+                if (state.hp <= 0) gameOver();
+            }
+        });
+    } else {
+        state.invincible--;
+    }
+
+    // --- Update Particles ---
+    particles = particles.filter(p => p.life > 0);
+    particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.92;
+        p.vy *= 0.92;
+        p.life--;
+    });
+
+    // --- Draw ---
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Grid background
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 1;
+    for (let gx = 0; gx < canvas.width; gx += 50) {
+        ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, canvas.height); ctx.stroke();
+    }
+    for (let gy = 0; gy < canvas.height; gy += 50) {
+        ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(canvas.width, gy); ctx.stroke();
+    }
+
+    // Particles
+    particles.forEach(p => {
+        ctx.globalAlpha = p.life / 50;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    // Enemies
+    enemies.forEach(en => {
+        ctx.save();
+        ctx.translate(en.x, en.y);
+        ctx.rotate(en.angle);
+        ctx.fillStyle = en.hp > 1 ? '#cc0000' : '#ff3300';
+        ctx.shadowColor = 'red';
+        ctx.shadowBlur = 12;
+        ctx.fillRect(-en.size / 2, -en.size / 2, en.size, en.size);
+        ctx.restore();
+    });
+
+    // Bullets
+    bullets.forEach(b => {
+        ctx.fillStyle = '#ffdd00';
+        ctx.shadowColor = 'yellow';
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    ctx.shadowBlur = 0;
+
+    // Player
+    ctx.save();
+    ctx.translate(player.x, player.y);
+    ctx.rotate(player.angle);
+
+    // Invincible flicker
+    if (state.invincible > 0 && Math.floor(state.invincible / 6) % 2 === 0) {
+        ctx.globalAlpha = 0.3;
+    }
+
+    ctx.fillStyle = 'orange';
+    ctx.shadowColor = 'orange';
+    ctx.shadowBlur = 18;
+    // Body
+    ctx.fillRect(-14, -10, 28, 20);
+    // Gun
+    ctx.fillStyle = '#ffb300';
+    ctx.fillRect(10, -4, 18, 8);
+    ctx.restore();
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+
+    requestAnimationFrame(loop);
 }
 </script>
-
 </body>
 </html>
